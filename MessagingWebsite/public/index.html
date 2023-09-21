@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Hello World</title>
+</head>
+<body>
+    <script>function showLoginForm() {
+        showForm('loginForm');
+    }
+    
+    function showSignupForm() {
+        showForm('signupForm');
+    }
+    
+    function showForm(formId) {
+        document.querySelector('.form-container').style.display = 'block';
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById(formId).style.display = 'block';
+    }
+    
+    function hideForms() {
+        document.querySelector('.form-container').style.display = 'none';
+    }
+    
+    
+    document.addEventListener('click', function (event) {
+        var isClickInsideForm = document.querySelector('.form-container').contains(event.target);
+        var isClickOnButton = document.querySelector('nav').contains(event.target);
+    
+        if (!isClickInsideForm && !isClickOnButton) {
+            hideForms();
+        }
+    });</script>
+    <nav>
+        <button id="showLoginBtn" onclick="showLoginForm()">Show Login</button>
+        <button id="showSignupBtn" onclick="showSignupForm()">Show Signup</button>
+
+    </nav>
+    <h1>Hello World</h1>
+    <div class="messages" id="messagesArrayContainer"></div>
+
+
+ 
+    <div class="form-container">
+        <form class="LoginForm">
+            <h2>Login</h2>
+            <label for="loginUsername">Username</label>
+            <input type="text" id="loginUsername">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword">
+            <button type="submit">Login</button>
+        </form>
+
+        <form class="SignUpForm">
+            <h2>Signup</h2>
+            <label for="signupUsername">Username</label>
+            <input type="text" id="signupUsername">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword">
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+
+
+    <div class="message-submission">
+        <h3>Submit a Message</h3>
+        <textarea placeholder="Enter your message here..." id="message"></textarea>
+        <button id="submitMessageBtn">Submit</button>
+    </div>
+    <!-- <div class="container">
+         <form class="SendMessage">
+            <label for="message">Message</label>
+            <input type="text" id="message">
+            <label for="user">User</label>
+            <input type="text" id="user">
+            <label for="email">Email</label>
+            <input type="email" id="email">
+            <button>Send</button>
+        </form>
+    </div> -->
+    <script src="bundle.js"></script>
+    
+    <script>
+        window.onload = function() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    </script>
+</body>
+</html>
