@@ -1,7 +1,11 @@
+let userName;
+let email;
+let password;
+let user;
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, onLog } from "firebase/app";
 import { getFirestore, collection, addDoc, onSnapshot, query, doc, orderBy, serverTimestamp } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,29 +29,116 @@ const auth = getAuth(app)
 const db = getFirestore()
 
 const colRef = collection(db, "Messages")
-const messageForm = document.querySelector(".message-submission")
-messageForm.addEventListener("submit", (e) => {
-    e.preventDefault()
-    //adds message to the doc
-    // addDoc(colRef, {
-    //     content: messageForm.message.value,
-    //     user: messageForm.user.value,
-    //     userEmail: messageForm.email.value,
-    //     messageCreated: serverTimestamp()
-    // })
-    //     .then(() => {
 
+
+// const messageSubmission = document.querySelector("message-submission")
+
+//**************************show login/sign up forms */
+const showForm_container = document.querySelector('.form-container')
+
+const showSignUpFormBtn = document.getElementById('showSignupBtn');
+const signUpForm = document.querySelector('.SignUpForm');
+
+const showLoginFormBtn = document.getElementById('showLoginBtn');
+const loginForm = document.querySelector('.LoginForm');
+
+showSignUpFormBtn.addEventListener('click', () => {
+    // Hide the login form if it's not already hidden
+
+    if (!loginForm.classList.contains('hidden')) {
+        loginForm.classList.add('hidden');
+    }
+
+    // Toggle the sign-up form
+    signUpForm.classList.toggle('hidden');
+    revealContainerForm()
+});
+
+showLoginFormBtn.addEventListener('click', () => {
+    // Hide the sign-up form if it's not already hidden
+    if (!signUpForm.classList.contains('hidden')) {
+        signUpForm.classList.add('hidden');
+    }
+
+    // Toggle the login form
+    loginForm.classList.toggle('hidden');
+    revealContainerForm()
+});
+
+
+
+function revealContainerForm() {
+    // Check if either the signUpForm or loginForm are not hidden
+    if (
+        !signUpForm.classList.contains('hidden') ||
+        !loginForm.classList.contains('hidden')
+    ) {
+        // If either forms are not hidden, make sure the container is visible
+        showForm_container.classList.remove('hidden');
+    }
+
+    // Check if both the signUpForm and loginForm are hidden
+    if (
+        signUpForm.classList.contains('hidden') &&
+        loginForm.classList.contains('hidden')
+    ) {
+        // If both forms are hidden, hide the container as well
+        showForm_container.classList.add('hidden');
+    }
+
+}
+//*************************** */
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // const messageForm = document.querySelector(".message-submission")
+    // messageForm.addEventListener("submit", (e) => {
+    //     e.preventDefault()
+    //     //adds message to the doc
+    //     addDoc(colRef, {
+    //         content: messageForm.message.value,
+    //         userName: messageForm.user.value,
+    //         userEmail: messageForm.email.value,
+    //         messageCreated: serverTimestamp()
     //     })
-})
+    //         .then(() => {
+
+    //         })
+    // })
+
+    //create User
+    // const signupForm = document.querySelector(".SignupForm");
+    signUpForm.addEventListener("submit", (e) => {
+        e.preventDefault()
+        userName = signUpForm.signupUsername.value
+        email = signUpForm.signupEmail.value
+        password = signUpForm.signupPassword.value
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCred) => {
+                user = userCred.user
+                console.log("user created", userCred)
+            })
+            .catch((error) => {
+                console.log(error.message)
+            })
+    });
 
 
-//create User
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // userName = signUpForm.signupUsername.value
+        email = signUpForm.signupEmail.value
+        password = signUpForm.signupPassword.value
 
-createUserWithEmailAndPassword(auth, email, password)
-    .then((userCred) => {
-
+        signInWithEmailAndPassword(auth, password, email)
+            .then((userCred) => {
+                user = userCred.user
+            })
     })
-
+})
 
 // let messages = []
 let messageQ = query(colRef, orderBy("messageCreated"))
@@ -66,32 +157,3 @@ onSnapshot(messageQ, (snapshot) => {
 })
 
 
-
-// function showLoginForm() {
-//     showForm('loginForm');
-// }
-
-// function showSignupForm() {
-//     showForm('signupForm');
-// }
-
-// function showForm(formId) {
-//     document.querySelector('.form-container').style.display = 'block';
-//     document.getElementById('loginForm').style.display = 'none';
-//     document.getElementById('signupForm').style.display = 'none';
-//     document.getElementById(formId).style.display = 'block';
-// }
-
-// function hideForms() {
-//     document.querySelector('.form-container').style.display = 'none';
-// }
-
-
-// document.addEventListener('click', function (event) {
-//     var isClickInsideForm = document.querySelector('.form-container').contains(event.target);
-//     var isClickOnButton = document.querySelector('nav').contains(event.target);
-
-//     if (!isClickInsideForm && !isClickOnButton) {
-//         hideForms();
-//     }
-// });
