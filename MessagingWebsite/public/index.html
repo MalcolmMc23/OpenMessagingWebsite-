@@ -12,13 +12,19 @@
     <nav>
         <button id="showLoginBtn" >Show Login</button>
         <button id="showSignupBtn">Show Signup</button>
+        <button id="logoutBtn">Logout</button>
 
     </nav>
     <h1>Hello World</h1>
     <div class="messages" id="messagesArrayContainer"></div>
 
 
- 
+  <div class="message-submission ">
+        <h3>Submit a Message</h3>
+        <label for="submitMessage">Submit Message</label>
+        <input id="message">message </input>
+        <button id="submitMessageBtn">Submit</button>
+    </div>
     <div class="form-container hidden">
         <form class="LoginForm hidden">
             <h2>Login</h2>
@@ -47,11 +53,7 @@
     </div>
 
 
-    <div class="message-submission hidden">
-        <h3>Submit a Message</h3>
-        <textarea placeholder="Enter your message here..." id="message"></textarea>
-        <button id="submitMessageBtn">Submit</button>
-    </div>
+   
     <!-- <div class="container">
          <form class="SendMessage">
             <label for="message">Message</label>

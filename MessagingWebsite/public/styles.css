@@ -67,12 +67,12 @@ input {
 
 
 .message-submission {
-    max-width: 800px; /* Matches the width of .content */
+    max-width: 1800px; /* Matches the width of .content */
     margin: 0 auto; /* Centers the div */
-    padding: 10px; /* Reduced padding */
+    padding: 1px; /* Reduced padding */
     border-top: 1px solid #ddd; /* Only a top border to give a separation effect */
     background-color: #fff;
-    position: fixed;
+    position: relative; 
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
