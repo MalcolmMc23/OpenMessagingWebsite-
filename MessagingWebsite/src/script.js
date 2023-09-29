@@ -6,15 +6,11 @@ let tempEmail
 let tempPassword
 let tempUserName;
 // Import the functions you need from the SDKs you need
-import { config } from 'dotenv'
-config()
 import { initializeApp, onLog } from "firebase/app";
 import { getFirestore, collection, addDoc, onSnapshot, query, doc, orderBy, serverTimestamp } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
-console.log(process.env.KEY)
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -28,7 +24,6 @@ const firebaseConfig = {
     appId: "1:262282250861:web:8a84be186a343b3b9a0d64",
     measurementId: "G-KDT0R0VSSQ"
 };
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -102,6 +97,23 @@ function revealContainerForm() {
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    // const messageForm = document.querySelector(".message-submission")
+    // messageForm.addEventListener("submit", (e) => {
+    //     e.preventDefault()
+    //     //adds message to the doc
+    //     addDoc(colRef, {
+    //         content: messageForm.message.value,
+    //         userName: messageForm.user.value,
+    //         userEmail: messageForm.email.value,
+    //         messageCreated: serverTimestamp()
+    //     })
+    //         .then(() => {
+
+    //         })
+    // })
+
+    //create User
+    // const signupForm = document.querySelector(".SignupForm");
     signUpForm.addEventListener("submit", (e) => {
         e.preventDefault()
         tempUserName = signUpForm.signupUsername.value
@@ -202,7 +214,6 @@ onAuthStateChanged(auth, (user) => {
         })
 
 
-        window.scrollTo(0, document.body.scrollHeight);  // Scroll to bottom
 
         // ...
     } else {
